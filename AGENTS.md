@@ -18,3 +18,5 @@
   data can be updated in one place without touching markup.
 - Scroll reveal animations use `src/hooks/use-reveal.ts` via the `Reveal`
   wrapper; no animation library is installed.
+
+- The consultant chatbot streams from `src/routes/api/chat.ts` (logic and prompt in `src/lib/chat.server.ts`) and saves leads to the `leads` table via a server-side tool, so the AI key and lead data stay on the server.
