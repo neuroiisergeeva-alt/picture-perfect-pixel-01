@@ -36,9 +36,15 @@ export function Header() {
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
         compact
           ? "border-b border-border/70 bg-background/85 py-2 backdrop-blur-xl"
-          : "py-5 md:py-7",
+          : "py-5 text-graphite-foreground md:py-7",
       )}
     >
+      {!compact && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-graphite/55 to-transparent"
+        />
+      )}
       <div className="mx-auto flex max-w-[86rem] items-center justify-between px-5 md:px-10">
         <a href="#top" className="flex items-baseline gap-2.5" aria-label="На главную">
           <span
