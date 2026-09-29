@@ -55,7 +55,12 @@ export function Header() {
           >
             {site.expertName}
           </span>
-          <span className="hidden text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:inline">
+          <span
+            className={cn(
+              "hidden text-[0.6rem] font-semibold uppercase tracking-[0.2em] sm:inline",
+              compact ? "text-muted-foreground" : "text-graphite-foreground/60",
+            )}
+          >
             дерево
           </span>
         </a>
@@ -65,7 +70,10 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[0.8rem] font-medium tracking-wide text-muted-foreground transition-colors hover:text-cognac"
+              className={cn(
+                "text-[0.8rem] font-medium tracking-wide transition-colors hover:text-honey",
+                compact ? "text-muted-foreground hover:text-cognac" : "text-graphite-foreground/80",
+              )}
             >
               {item.label}
             </a>
@@ -81,11 +89,15 @@ export function Header() {
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-sm border border-border lg:hidden"
+            className={cn(
+              "flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-sm border lg:hidden",
+              compact || open ? "border-border" : "border-graphite-foreground/40",
+            )}
           >
             <span
               className={cn(
-                "h-px w-5 bg-foreground transition-transform duration-300",
+                "h-px w-5 transition-transform duration-300",
+                compact || open ? "bg-foreground" : "bg-graphite-foreground",
                 open && "translate-y-[3.5px] rotate-45",
               )}
             />
