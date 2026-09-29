@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Btn } from "./Btn";
 import { Reveal } from "./Reveal";
 import { AskBot } from "./AskBot";
-import { site } from "@/config/site";
+import { useSite } from "@/lib/site-data";
 
 export function About() {
   return (
@@ -265,6 +265,7 @@ export function Audience() {
 }
 
 export function Production() {
+  const { site, waLink, tgLink, products } = useSite();
   return (
     <section className="py-24 md:py-36">
       <div className="mx-auto grid max-w-[86rem] items-center gap-14 px-5 md:px-10 lg:grid-cols-2 lg:gap-20">

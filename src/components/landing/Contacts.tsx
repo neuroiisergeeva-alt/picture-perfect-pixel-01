@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { site, waLink, tgLink } from "@/config/site";
+import { useSite } from "@/lib/site-data";
 import { Btn } from "./Btn";
 import { Reveal } from "./Reveal";
 
@@ -7,6 +7,7 @@ const fieldCls =
   "w-full rounded-sm border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-cognac focus:outline-none";
 
 export function CtaBand() {
+  const { site, waLink, tgLink, products } = useSite();
   return (
     <section className="bg-secondary/70 py-24 md:py-32">
       <div className="mx-auto max-w-3xl px-5 text-center md:px-10">
@@ -31,6 +32,7 @@ export function CtaBand() {
 }
 
 export function ContactForm() {
+  const { site, waLink, tgLink, products } = useSite();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState("");
@@ -180,6 +182,7 @@ export function ContactForm() {
 }
 
 export function Footer() {
+  const { site, waLink, tgLink, products } = useSite();
   return (
     <footer className="border-t border-border py-12">
       <div className="mx-auto flex max-w-[86rem] flex-col items-start justify-between gap-6 px-5 text-sm text-muted-foreground md:flex-row md:items-center md:px-10">
@@ -202,6 +205,7 @@ export function Footer() {
 }
 
 export function MobileBar() {
+  const { site, waLink, tgLink, products } = useSite();
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-border bg-background/95 p-3 backdrop-blur-xl sm:hidden">
       <a
