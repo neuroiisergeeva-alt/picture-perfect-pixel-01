@@ -103,7 +103,8 @@ export function Header() {
             />
             <span
               className={cn(
-                "h-px w-5 bg-foreground transition-transform duration-300",
+                "h-px w-5 transition-transform duration-300",
+                compact || open ? "bg-foreground" : "bg-graphite-foreground",
                 open && "-translate-y-[3.5px] -rotate-45",
               )}
             />
