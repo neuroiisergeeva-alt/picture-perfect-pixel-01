@@ -1,24 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/landing/Header";
+import { Hero } from "@/components/landing/Hero";
+import { Catalog } from "@/components/landing/Catalog";
+import { Projects } from "@/components/landing/Projects";
+import {
+  About,
+  Advantages,
+  Audience,
+  Emotion,
+  Process,
+  Production,
+} from "@/components/landing/Sections";
+import { CtaBand, ContactForm, Footer, MobileBar } from "@/components/landing/Contacts";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "Пиломатериалы и изделия из дерева — эксперт с опытом более 10 лет";
+const description =
+  "Помогаю выбирать пиломатериалы для строительства, отделки и интерьера: доска, вагонка, планкен, клееный брус, ступени, мебельные щиты. Собственное производство, опт и розница, поставки по России.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Advantages />
+        <Catalog />
+        <Emotion />
+        <Process />
+        <Audience />
+        <Projects />
+        <Production />
+        <CtaBand />
+        <ContactForm />
+      </main>
+      <Footer />
+      <MobileBar />
+      <div className="h-16 sm:hidden" aria-hidden="true" />
+    </>
   );
 }
