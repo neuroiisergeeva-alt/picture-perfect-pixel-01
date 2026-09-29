@@ -11,6 +11,8 @@ import {
   Process,
   Production,
 } from "@/components/landing/Sections";
+import { getSiteData } from "@/lib/site-data.functions";
+import { SiteProvider } from "@/lib/site-data";
 import { CtaBand, ContactForm, Footer, MobileBar } from "@/components/landing/Contacts";
 
 const title = "Пиломатериалы и изделия из дерева — эксперт с опытом более 10 лет";
@@ -28,12 +30,16 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: () => getSiteData(),
+  errorComponent: () => <p className="p-10">Не удалось загрузить страницу. Обновите её, пожалуйста.</p>,
+  notFoundComponent: () => <p className="p-10">Страница не найдена.</p>,
   component: Index,
 });
 
 function Index() {
+  const data = Route.useLoaderData();
   return (
-    <>
+    <SiteProvider settings={data.settings} products={data.products}>
       <Header />
       <main>
         <Hero />
@@ -51,6 +57,6 @@ function Index() {
       <Footer />
       <MobileBar />
       <div className="h-16 sm:hidden" aria-hidden="true" />
-    </>
+    </SiteProvider>
   );
 }

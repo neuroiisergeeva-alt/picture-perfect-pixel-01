@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { site } from "@/config/site";
+import { getSiteData } from "@/lib/site-data.functions";
 
 const title = "Политика конфиденциальности — пиломатериалы Виктории Сергеевой";
 const description =
@@ -16,10 +17,14 @@ export const Route = createFileRoute("/privacy")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
+  loader: () => getSiteData(),
+  errorComponent: () => <p className="p-10">Не удалось загрузить страницу.</p>,
   component: Privacy,
 });
 
 function Privacy() {
+  const { settings } = Route.useLoaderData();
+  const email = settings?.email ?? site.email;
   return (
     <main className="mx-auto max-w-3xl px-5 py-20 md:py-28">
       <Link to="/" className="eyebrow text-cognac">← На главную</Link>
@@ -30,7 +35,7 @@ function Privacy() {
       <div className="mt-10 space-y-6 text-[0.95rem] leading-relaxed text-muted-foreground">
         <p>
           1. Оператор персональных данных — [ФИО / ИП / наименование организации, ИНН, адрес].
-          Контакт для обращений: {site.email}.
+          Контакт для обращений: {email}.
         </p>
         <p>
           2. Мы обрабатываем данные, которые Вы сообщаете сами в форме заявки или в чате с
@@ -46,7 +51,7 @@ function Privacy() {
         </p>
         <p>
           5. Вы можете отозвать согласие и потребовать удаления своих данных, направив запрос на
-          {" "}{site.email}.
+          {" "}{email}.
         </p>
         <p>6. Сообщения в чате обрабатываются с помощью сервиса искусственного интеллекта.</p>
       </div>
