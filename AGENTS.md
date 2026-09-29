@@ -20,3 +20,5 @@
   wrapper; no animation library is installed.
 
 - The consultant chatbot streams from `src/routes/api/chat.ts` (logic and prompt in `src/lib/chat.server.ts`) and saves leads to the `leads` table via a server-side tool, so the AI key and lead data stay on the server.
+- Editable site content (contacts, products, leads) lives in the database (`site_settings`, `products`, `leads`) and is managed at `/admin`; `src/config/site.ts` and `src/data/catalog.ts` are fallbacks only — so the owner edits without code.
+- Admin access is granted only via `claim_admin()` to the confirmed owner email; roles live in `user_roles`.

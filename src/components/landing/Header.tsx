@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { site } from "@/config/site";
+import { useSite } from "@/lib/site-data";
 import { Btn } from "./Btn";
 
 const nav = [
@@ -13,6 +13,7 @@ const nav = [
 ];
 
 export function Header() {
+  const { site, waLink, tgLink, products } = useSite();
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
 

@@ -26,6 +26,7 @@ export type Database = {
           phone: string | null
           purpose: string | null
           region: string | null
+          status: string
           volume: string | null
         }
         Insert: {
@@ -39,6 +40,7 @@ export type Database = {
           phone?: string | null
           purpose?: string | null
           region?: string | null
+          status?: string
           volume?: string | null
         }
         Update: {
@@ -52,7 +54,101 @@ export type Database = {
           phone?: string | null
           purpose?: string | null
           region?: string | null
+          status?: string
           volume?: string | null
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          alt: string
+          created_at: string
+          id: string
+          image_key: string | null
+          image_url: string | null
+          sort_order: number
+          text: string
+          title: string
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          alt?: string
+          created_at?: string
+          id?: string
+          image_key?: string | null
+          image_url?: string | null
+          sort_order?: number
+          text?: string
+          title: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          alt?: string
+          created_at?: string
+          id?: string
+          image_key?: string | null
+          image_url?: string | null
+          sort_order?: number
+          text?: string
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          email: string
+          expert_name: string
+          expert_role: string
+          geo: string
+          id: number
+          phone: string
+          telegram: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          email?: string
+          expert_name?: string
+          expert_role?: string
+          geo?: string
+          id?: number
+          phone?: string
+          telegram?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          email?: string
+          expert_name?: string
+          expert_role?: string
+          geo?: string
+          id?: number
+          phone?: string
+          telegram?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -61,10 +157,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_admin: { Args: never; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -191,6 +294,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const

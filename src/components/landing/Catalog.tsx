@@ -1,10 +1,10 @@
-import { products } from "@/data/catalog";
+import { useSite } from "@/lib/site-data";
 import { Btn } from "./Btn";
 import { Reveal } from "./Reveal";
 import { cn } from "@/lib/utils";
-import { waLink } from "@/config/site";
 
 export function Catalog() {
+  const { site, waLink, tgLink, products } = useSite();
   return (
     <section id="catalog" className="bg-secondary/60 py-24 md:py-36">
       <div className="mx-auto max-w-[86rem] px-5 md:px-10">
