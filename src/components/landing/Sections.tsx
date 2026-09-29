@@ -2,6 +2,7 @@ import texture from "@/assets/texture-wood.jpg";
 import emotion from "@/assets/emotion-interior.jpg";
 import production1 from "@/assets/production-1.jpg";
 import production2 from "@/assets/production-2.jpg";
+import victoriaPortrait from "@/assets/victoria-portrait.jpg";
 import { useEffect, useState } from "react";
 import { Btn } from "./Btn";
 import { Reveal } from "./Reveal";
@@ -47,14 +48,14 @@ export function About() {
 
         <Reveal delay={150} className="order-1 lg:order-2">
           <div className="relative">
-            {/* TODO: заменить на вашу фотографию */}
-            <div className="flex aspect-[4/5] flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-cognac/40 bg-secondary px-8 text-center">
-              <span className="eyebrow">Место для фотографии</span>
-              <p className="max-w-xs text-sm text-muted-foreground">
-                Здесь будет ваш портрет — на производстве, в мастерской или на объекте.
-                Пришлите фото, и я поставлю его сюда.
-              </p>
-            </div>
+            <img
+              src={victoriaPortrait}
+              alt="Виктория Сергеева — эксперт по пиломатериалам и изделиям из дерева"
+              loading="lazy"
+              width={1200}
+              height={1500}
+              className="aspect-[4/5] w-full rounded-sm object-cover object-center shadow-soft"
+            />
             <img
               src={texture}
               alt="Крупный план текстуры строганой доски с сучком и годовыми кольцами"
