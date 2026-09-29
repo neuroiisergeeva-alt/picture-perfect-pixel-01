@@ -6,6 +6,7 @@ import victoriaPortrait from "@/assets/victoria-portrait.jpg";
 import { useEffect, useState } from "react";
 import { Btn } from "./Btn";
 import { Reveal } from "./Reveal";
+import { AskBot } from "./AskBot";
 import { site } from "@/config/site";
 
 export function About() {
@@ -57,6 +58,7 @@ export function About() {
               className="aspect-[4/5] w-full rounded-sm object-cover object-center shadow-soft"
             />
           </div>
+          <AskBot />
         </Reveal>
       </div>
     </section>
