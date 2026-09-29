@@ -95,13 +95,13 @@ function Leads() {
   });
   const update = async (id: string, status: string) => {
     const { error } = await supabase.from("leads").update({ status }).eq("id", id);
-    if (error) return toast.error("Не удалось сохранить");
+    if (error) return void toast.error("Не удалось сохранить");
     qc.invalidateQueries({ queryKey: ["leads"] });
   };
   const remove = async (id: string) => {
     if (!confirm("Удалить заявку?")) return;
     const { error } = await supabase.from("leads").delete().eq("id", id);
-    if (error) return toast.error("Не удалось удалить");
+    if (error) return void toast.error("Не удалось удалить");
     qc.invalidateQueries({ queryKey: ["leads"] });
   };
 
@@ -159,7 +159,7 @@ function Products() {
   const add = async () => {
     const max = Math.max(0, ...(q.data ?? []).map((p) => p.sort_order));
     const { error } = await supabase.from("products").insert({ title: "Новый товар", sort_order: max + 1, visible: false });
-    if (error) return toast.error("Не удалось добавить");
+    if (error) return void toast.error("Не удалось добавить");
     qc.invalidateQueries({ queryKey: ["admin-products"] });
   };
   if (q.isLoading) return <p className="mt-6 text-muted-foreground">Загрузка…</p>;
@@ -180,7 +180,7 @@ function ProductEditor({ p }: { p: Product }) {
   const refresh = () => qc.invalidateQueries({ queryKey: ["admin-products"] });
 
   const save = async () => {
-    if (!f.title.trim()) return toast.error("Введите название");
+    if (!f.title.trim()) return void toast.error("Введите название");
     const { error } = await supabase.from("products").update({
       title: f.title.trim().slice(0, 120),
       text: f.text.trim().slice(0, 500),
@@ -189,25 +189,25 @@ function ProductEditor({ p }: { p: Product }) {
       visible: f.visible,
       image_url: f.image_url,
     }).eq("id", p.id);
-    if (error) return toast.error("Не удалось сохранить");
+    if (error) return void toast.error("Не удалось сохранить");
     toast.success("Сохранено");
     refresh();
   };
   const remove = async () => {
     if (!confirm(`Удалить «${p.title}»?`)) return;
     const { error } = await supabase.from("products").delete().eq("id", p.id);
-    if (error) return toast.error("Не удалось удалить");
+    if (error) return void toast.error("Не удалось удалить");
     refresh();
   };
   const upload = async (file: File) => {
-    if (!file.type.startsWith("image/")) return toast.error("Выберите изображение");
+    if (!file.type.startsWith("image/")) return void toast.error("Выберите изображение");
     setUploading(true);
     const path = `${p.id}/${Date.now()}.${file.name.split(".").pop() || "jpg"}`;
     const up = await supabase.storage.from("product-images").upload(path, file);
-    if (up.error) { setUploading(false); return toast.error("Не удалось загрузить фото"); }
+    if (up.error) { setUploading(false); return void toast.error("Не удалось загрузить фото"); }
     const signed = await supabase.storage.from("product-images").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
     setUploading(false);
-    if (signed.error) return toast.error("Не удалось получить ссылку на фото");
+    if (signed.error) return void toast.error("Не удалось получить ссылку на фото");
     setF((v) => ({ ...v, image_url: signed.data.signedUrl }));
     toast.success("Фото загружено — нажмите «Сохранить»");
   };
@@ -268,9 +268,9 @@ function SettingsForm() {
 
   const save = async () => {
     const { id: _id, updated_at: _u, ...rest } = f;
-    const clean = Object.fromEntries(Object.entries(rest).map(([k, v]) => [k, String(v).trim().slice(0, 200)]));
+    const clean = Object.fromEntries(Object.entries(rest).map(([k, v]) => [k, String(v).trim().slice(0, 200)])) as Partial<Settings>;
     const { error } = await supabase.from("site_settings").update(clean).eq("id", 1);
-    if (error) return toast.error("Не удалось сохранить");
+    if (error) return void toast.error("Не удалось сохранить");
     toast.success("Сохранено — изменения уже на сайте");
   };
 
