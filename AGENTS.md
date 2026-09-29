@@ -8,3 +8,13 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Landing sections live in `src/components/landing/*` and are composed only in
+  `src/routes/index.tsx` — keeps the single-page site readable and reorderable.
+- Editable content (products, project gallery) lives in `src/data/catalog.ts`;
+  contacts and the expert's name live in `src/config/site.ts` — so the owner's
+  data can be updated in one place without touching markup.
+- Scroll reveal animations use `src/hooks/use-reveal.ts` via the `Reveal`
+  wrapper; no animation library is installed.
