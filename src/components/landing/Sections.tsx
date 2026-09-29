@@ -124,6 +124,8 @@ export function Advantages() {
               </div>
             </Reveal>
           ))}
+          {/* Заполняем пустые ячейки сетки, чтобы не было «дыр» */}
+          <div className="hidden bg-card sm:block lg:col-span-2" aria-hidden="true" />
         </div>
       </div>
     </section>
