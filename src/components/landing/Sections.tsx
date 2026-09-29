@@ -56,14 +56,6 @@ export function About() {
               height={1500}
               className="aspect-[4/5] w-full rounded-sm object-cover object-center shadow-soft"
             />
-            <img
-              src={texture}
-              alt="Крупный план текстуры строганой доски с сучком и годовыми кольцами"
-              loading="lazy"
-              width={1200}
-              height={1600}
-              className="absolute -bottom-10 -left-6 hidden h-52 w-40 rounded-sm object-cover shadow-lift sm:block lg:-left-12 lg:h-64 lg:w-48"
-            />
           </div>
         </Reveal>
       </div>
