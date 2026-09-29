@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { Link } from "@tanstack/react-router";
-import { MessageCircle, CheckCircle2 } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -71,7 +71,6 @@ function Chat() {
                           type={p.type}
                           state={p.state}
                           title="Заявка передана Виктории"
-                          icon={<CheckCircle2 className="size-4 text-cognac" />}
                         />
                       </Tool>
                     );
