@@ -73,7 +73,10 @@ export function ContactForm() {
             className="mt-10 grid gap-4 sm:grid-cols-2"
             onSubmit={async (e) => {
               e.preventDefault();
-              if (!agreed) return toast.error("Примите политику конфиденциальности");
+              if (!agreed) {
+                toast.error("Примите политику конфиденциальности");
+                return;
+              }
               setSending(true);
               try {
                 await send({
