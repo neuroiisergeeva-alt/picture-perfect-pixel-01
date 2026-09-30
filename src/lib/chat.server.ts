@@ -84,6 +84,7 @@ export async function handleChat(request: Request) {
             console.error("save_lead failed", error.message);
             return { ok: false, error: "Не удалось сохранить заявку" };
           }
+          await notifyTelegram(lead).catch((e) => console.error("telegram notify failed", e));
           return { ok: true };
         },
       }),
