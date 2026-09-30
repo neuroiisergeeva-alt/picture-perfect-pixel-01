@@ -1,5 +1,9 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { useSite } from "@/lib/site-data";
+import { submitLead } from "@/lib/leads.functions";
 import { Btn } from "./Btn";
 import { Reveal } from "./Reveal";
 
@@ -7,7 +11,6 @@ const fieldCls =
   "w-full rounded-sm border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-cognac focus:outline-none";
 
 export function CtaBand() {
-  const { site, waLink, tgLink, products } = useSite();
   return (
     <section className="bg-secondary/70 py-24 md:py-32">
       <div className="mx-auto max-w-3xl px-5 text-center md:px-10">
@@ -32,12 +35,15 @@ export function CtaBand() {
 }
 
 export function ContactForm() {
-  const { site, waLink, tgLink, products } = useSite();
+  const { site, waLink, tgLink } = useSite();
+  const send = useServerFn(submitLead);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState("");
   const [comment, setComment] = useState("");
   const [fileName, setFileName] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const message = [
     "Заявка с сайта",
@@ -65,9 +71,33 @@ export function ContactForm() {
 
           <form
             className="mt-10 grid gap-4 sm:grid-cols-2"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              window.open(waLink(message), "_blank", "noopener,noreferrer");
+              if (!agreed) {
+                toast.error("Примите политику конфиденциальности");
+                return;
+              }
+              setSending(true);
+              try {
+                await send({
+                  data: {
+                    name,
+                    phone,
+                    material: interest,
+                    notes: [comment, fileName && `Файл: ${fileName} (пришлёт в мессенджере)`]
+                      .filter(Boolean)
+                      .join("\n"),
+                    consent: true,
+                  },
+                });
+                toast.success("Спасибо! Заявка отправлена, я скоро свяжусь с Вами.");
+                setName(""); setPhone(""); setInterest(""); setComment(""); setFileName("");
+                if (fileName) window.open(waLink(message), "_blank", "noopener,noreferrer");
+              } catch {
+                toast.error("Не удалось отправить. Проверьте телефон и попробуйте ещё раз.");
+              } finally {
+                setSending(false);
+              }
             }}
           >
             <label className="sm:col-span-1">
@@ -128,12 +158,27 @@ export function ContactForm() {
                 onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
               />
               <span className="mt-2 block text-xs text-muted-foreground">
-                Файл прикрепится в переписке — я открою чат с уже заполненной заявкой.
+                После отправки откроется WhatsApp, чтобы прикрепить файл.
+              </span>
+            </label>
+            <label className="flex items-start gap-3 text-sm text-muted-foreground sm:col-span-2">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-1 accent-[var(--color-cognac)]"
+              />
+              <span>
+                Я принимаю{" "}
+                <Link to="/privacy" target="_blank" className="text-cognac underline">
+                  политику конфиденциальности
+                </Link>{" "}
+                и даю согласие на обработку персональных данных.
               </span>
             </label>
             <div className="sm:col-span-2">
               <Btn type="submit" className="w-full py-5 sm:w-auto sm:px-12">
-                Отправить заявку
+                {sending ? "Отправляю…" : "Отправить заявку"}
               </Btn>
             </div>
           </form>
